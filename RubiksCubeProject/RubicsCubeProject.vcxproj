@@ -24,6 +24,7 @@
     <ProjectGuid>{8224841e-2870-4a0d-8577-7de59fde82cc}</ProjectGuid>
     <RootNamespace>RubicsCubeProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>RubiksCubeProject</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -133,7 +134,7 @@
     <ClCompile Include="CubieRenderer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="KeyboardObserver.cpp" />
-    <ClCompile Include="RubicsCube.cpp" />
+    <ClCompile Include="RubiksCube.cpp" />
     <ClCompile Include="ShaderUtil.cpp" />
     <ClCompile Include="SimpleCubieRenderer.cpp" />
     <ClCompile Include="TestCompoundCube.cpp" />

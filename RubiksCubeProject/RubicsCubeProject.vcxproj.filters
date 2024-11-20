@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RubicsCube.cpp">
+    <ClCompile Include="RubiksCube.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="TestGlm.cpp">
@@ -52,6 +52,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="TestSound.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMouse.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,6 +93,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="TestSound.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMouse.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
