@@ -1,4 +1,7 @@
 
+//FERTIG
+
+
 #include "ShaderUtil.h"
 #include <iostream>
 #include <fstream>
@@ -50,12 +53,10 @@ GLuint ShaderUtil::CreateShaderProgram(const char* vertexFilename, const char* f
 		PrintProgramLog(shaderProgram);
 	}
 
-
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 	
-	return shaderProgram;
-	
+	return shaderProgram;	
 }
 
 std::string ShaderUtil::LoadFile(const char* fileName)

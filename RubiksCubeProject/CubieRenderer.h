@@ -6,7 +6,7 @@
 class CubieRenderer {
 public:
 	void Initialize();
-	void Render(const glm::mat4& transformationMatrix);
+	void Render(const glm::mat4& viewProjection, const glm::mat4& model);
 	void ClearResources();
 
 	float GetCubieExtension();
@@ -16,10 +16,11 @@ private:
 
 	void AddSidePosition(int sideType, int direction, std::vector<glm::vec3>& positionArray);
 	void AddSideColor(int sideType, int direction, std::vector<glm::vec3>& colorArray);
-	void TranscribeToFloatArray(std::vector<glm::vec3>& vecArray, float* floatArray);
 
 	GLuint m_arrayBufferObject;
 	GLuint m_vertexBufferObject[2];
 	GLuint m_shaderProgram;
 	GLuint m_transformLocation;
+
+
 };

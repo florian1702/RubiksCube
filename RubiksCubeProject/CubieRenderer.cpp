@@ -3,7 +3,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 void CubieRenderer::Initialize() {
-	float floatArray[6 * 6 * 3];
 	std::vector<glm::vec3> positionField;
 	std::vector<glm::vec3> colorField;
 
@@ -23,17 +22,15 @@ void CubieRenderer::Initialize() {
 
 	glBindVertexArray(m_arrayBufferObject);
 
+	//POSITION
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[0]);
-	//TranscribeToFloatArray(positionField, floatArray);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, 12 * positionField.size(), positionField.data(), GL_STATIC_DRAW);
-
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * positionField.size(), positionField.data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	//COLOR
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferObject[1]);
-	TranscribeToFloatArray(colorField, floatArray);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(floatArray), floatArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * colorField.size(), colorField.data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 
@@ -41,11 +38,12 @@ void CubieRenderer::Initialize() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void CubieRenderer::Render(const glm::mat4& transformationMatrix) {
+void CubieRenderer::Render(const glm::mat4& viewProjection, const glm::mat4& model) {
+	glm::mat4 globalTransformation = viewProjection * model;
 	glUseProgram(m_shaderProgram);
 	glBindVertexArray(m_arrayBufferObject);
 
-	glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(transformationMatrix));
+	glUniformMatrix4fv(m_transformLocation, 1, GL_FALSE, glm::value_ptr(globalTransformation));
 	glDrawArrays(GL_TRIANGLES, 0, 6 * 6);
 
 	glBindVertexArray(0);
@@ -92,14 +90,5 @@ void CubieRenderer::AddSideColor(int sideType, int direction, std::vector<glm::v
 	
 	for (int i = 0; i < 6; i++) {
 		colorArray.push_back(color);
-	}
-}
-
-void CubieRenderer::TranscribeToFloatArray(std::vector<glm::vec3>& vecArray, float* floatArray) {
-	int writingCounter = 0;
-	for (int i = 0; i < 36; i++) {
-		for (int coord = 0; coord < 3; coord++) {
-			floatArray[writingCounter++] = vecArray[i][coord];
-		}
 	}
 }

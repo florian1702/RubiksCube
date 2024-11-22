@@ -1,105 +1,96 @@
+#include "RubiksCube.h"
+#include "RubiksGameInterface.h"
+#include <glm/gtx/intersect.hpp>
+#include <iomanip>
+#define NOMINMAX
+#include <windows.h>
 
-#define GLEW_STATIC
-#include "GameInterface.h"
-#include "TestGlm.h"
-#include "TestTriangle.h"
-#include "TestCubie.h"
-#include "TestKey.h"
-#include "TestMouse.h"
+void RubiksCube::Initialize(const RubiksGameInterface& gameInterface) {
+	m_cubieRenderer.Initialize();
+	
+	//Offset + 0.1f damit die Luecken zwischen den Minicubies erscheinen.
+	float offset = m_cubieRenderer.GetCubieExtension() + 0.1f;
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <thread>
-
-TestGlm gGlmTest;
-GameInterface gDummyTest;
-TestTriangle gTestTriangle;
-TestCubie gTestCubie;
-TestKey gTestKey;
-TestMouse gTestMouse;
-
-GameInterface* gUsedInterface;
-
-double lastTime = glfwGetTime();
-double timeDiffrence = 0.0;
-
-float bg_red = 0.3f;
-float bg_green = 0.6f;
-float bg_blue = 1.0f;
-
-void RenderWindow(GLFWwindow* window) {
-	gUsedInterface->Update(timeDiffrence);
-	//gUsedInterface->Update(0.1); // fürs Debuggen
-	int screenWidth, screenHeight;
-	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
-	float aspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
-
-	glViewport(0, 0, screenWidth, screenHeight);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glClearColor(bg_red, bg_green, bg_blue, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	gUsedInterface->Render(aspectRatio);
-	glfwSwapBuffers(window);
-
-
-	bg_red = (sin(lastTime + (3.14f / 3)) / 4.0f) + 0.75f;
-	bg_green = (sin(lastTime + 2 * (3.14f / 3)) / 4.0f) + 0.75f;
-	bg_blue = (sin(lastTime) / 4.0f) + 0.75f;
-
-	double currenTime = glfwGetTime();
-	timeDiffrence = currenTime - lastTime;
-	lastTime = currenTime;
-	std::this_thread::sleep_for(std::chrono::milliseconds(8));
-
+	for (int x = 0; x < 3; x++)
+		for (int y = 0; y < 3; y++)
+			for (int z = 0; z < 3; z++) {
+				m_grid[x][y][z] = new Cubie;
+				m_grid[x][y][z]->m_id = (x * 3 * 3) + (y * 3) + z;
+				m_grid[x][y][z]->m_position = glm::vec3((x - 1) * offset, (y - 1) * offset, (z - 1) * offset);
+			}
+	m_input = &gameInterface.GetInputComponent();
 }
 
-void RunCoreLoop(GLFWwindow* window) {
-
-
-	while (!glfwWindowShouldClose(window)) {
-		glfwPollEvents();
-		RenderWindow(window);
+void RubiksCube::Render(const glm::mat4& viewProjection) {
+	
+	glm::mat4 cubeRotation = glm::mat4_cast(m_modelRotation);
+	
+	for (int x = 0; x < 3; ++x) {
+		for (int y = 0; y < 3; ++y) {
+			for (int z = 0; z < 3; ++z) {
+				glm::mat4 cubieTranslation = glm::translate(glm::mat4(1.0f), m_grid[x][y][z]->m_position);
+				glm::mat4 cubieRotation = m_grid[x][y][z]->m_visibleRotation;
+				m_cubieRenderer.Render(viewProjection, cubeRotation * cubieRotation * cubieTranslation);
+			}
+		}
 	}
 }
 
-GLFWwindow* InitializeSystem() {
-	glfwInit();
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-
-	GLFWwindow* window = glfwCreateWindow(1024, 768, "Rubics Cube", nullptr, nullptr);
-	glfwMakeContextCurrent(window);
-	glfwSetWindowRefreshCallback(window, RenderWindow);
-
-	glewExperimental = true;
-	glewInit();
-
-	gUsedInterface->Initialize(window);
-
-	return window;
-}
-
-void ShutdownSystem() {
-	gUsedInterface->ClearResources();
-	glfwTerminate();
-
-}
-
-int main()
+void RubiksCube::Update(const RubiksGameInterface& gameInterface)
 {
-	//gUsedInterface = &gDummyTest;
-	//gUsedInterface = &gGlmTest;
-	//gUsedInterface = &gTestTriangle;
-	//gUsedInterface = &gTestCubie;
-	//gUsedInterface = &gTestKey;
-	gUsedInterface = &gTestMouse;
-	GLFWwindow* window = InitializeSystem();
-	RunCoreLoop(window);
-	ShutdownSystem();
+	UpdateMouse();
+	m_previousScreenPosition = m_input->GetScreenPosition();
+}
+
+void RubiksCube::ClearResources()
+{
+	m_cubieRenderer.ClearResources();
+}
+
+//INPUT
+void RubiksCube::UpdateMouse() {
+
+	//LEFT CLICK
+	if (m_input->GetActiveMouseButton() == InputSystem::LEFT_BUTTON) {
+		
+		switch (m_input->GetLeftClickState()) {
+
+		case InputSystem::CLICK:
+			std::cout << "CLICK";
+			break;
+
+		case InputSystem::HOLD:
+			std::cout << "HOLD";
+			break;
+
+		case InputSystem::RELEASE:
+			std::cout << "RELEASE";
+			break;
+		}
+	}
+	//RIGHT CLICK
+	else if (m_input->GetActiveMouseButton() == InputSystem::RIGHT_BUTTON) {
+		if (m_input->GetRightClickState() == InputSystem::HOLD) {
+			RotateCube();
+		}
+	}
+}
+
+//CUBE
+void RubiksCube::RotateCube() {
+	//Calculate the difference between the current and previous screen positions
+	glm::vec2 delta = m_input->GetScreenPosition() - m_previousScreenPosition;
+
+	//Convert the delta vector to radians
+	float angleX = glm::radians(delta.x);
+	float angleY = glm::radians(delta.y);
+
+	//Create quaternions for the rotations
+	glm::quat rotationX = glm::angleAxis(angleX, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::quat rotationY = glm::angleAxis(angleY, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	//Apply the rotations to the cubeRotation
+	m_modelRotation = rotationX * m_modelRotation;
+	m_modelRotation = rotationY * m_modelRotation;
+	m_modelRotation = glm::normalize(m_modelRotation);
 }

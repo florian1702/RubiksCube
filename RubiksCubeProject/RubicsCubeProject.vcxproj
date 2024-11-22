@@ -134,31 +134,20 @@
     <ClCompile Include="CubieRenderer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="KeyboardObserver.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="RubiksCube.cpp" />
+    <ClCompile Include="RubiksGameInterface.cpp" />
     <ClCompile Include="ShaderUtil.cpp" />
-    <ClCompile Include="SimpleCubieRenderer.cpp" />
-    <ClCompile Include="TestCompoundCube.cpp" />
-    <ClCompile Include="TestCubie.cpp" />
-    <ClCompile Include="TestGlm.cpp" />
-    <ClCompile Include="TestKey.cpp" />
-    <ClCompile Include="TestMouse.cpp" />
-    <ClCompile Include="TestTriangle.cpp" />
-    <ClCompile Include="TestSound.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cubie.h" />
     <ClInclude Include="CubieRenderer.h" />
-    <ClInclude Include="GameInterface.h" />
+    <ClInclude Include="IGameInterface.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="KeyboardObserver.h" />
+    <ClInclude Include="RubiksCube.h" />
+    <ClInclude Include="RubiksGameInterface.h" />
     <ClInclude Include="ShaderUtil.h" />
-    <ClInclude Include="SimpleCubieRenderer.h" />
-    <ClInclude Include="TestCompoundCube.h" />
-    <ClInclude Include="TestCubie.h" />
-    <ClInclude Include="TestKey.h" />
-    <ClInclude Include="TestMouse.h" />
-    <ClInclude Include="TestTriangle.h" />
-    <ClInclude Include="TestGlm.h" />
-    <ClInclude Include="TestSound.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture.jpg" />

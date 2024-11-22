@@ -1,8 +1,10 @@
+//FERTIG
+
 #pragma once
 
 struct GLFWwindow;
 
-class GameInterface {
+class IGameInterface {
 public:
 	virtual void Initialize() {}
 	virtual void Initialize(GLFWwindow* winndow) { Initialize(); }

@@ -1,3 +1,6 @@
+//FERTIG
+
+
 #pragma once
 
 struct GLFWwindow;
@@ -7,7 +10,7 @@ public:
 	KeyboardObserver(GLFWwindow* window, int key);
 	void Update();
 
-	bool m_isDown;
+	bool m_wasDown;
 	bool m_wasPressed;
 	bool m_wasReleased;
 
@@ -15,3 +18,4 @@ private:
 	GLFWwindow* m_window;
 	int m_key;
 };
+
