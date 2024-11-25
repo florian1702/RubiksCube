@@ -37,9 +37,9 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Render all cubs
+- [x] Render all cubs
+- [x] Mouse control of the camera
 - [ ] Mouse control of the cube
-- [ ] Mouse control of the camera
 - [ ] Animations
 - [ ] Sounds
 - [ ] More complex graphics programming (shaders)
