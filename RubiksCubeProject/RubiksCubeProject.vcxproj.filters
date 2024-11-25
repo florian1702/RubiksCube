@@ -81,12 +81,6 @@
     <CopyFileToFolders Include="VShader.glsl">
       <Filter>Shader</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="FColor.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="VColor.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <None Include="FShader.glsl">

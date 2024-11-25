@@ -13,14 +13,21 @@ public:
 	
 private:
 	const float m_offset = 0.5f;
+	const glm::vec3 RED = glm::vec3(1.0f, 0.0f, 0.0f);
+	const glm::vec3 GREEN = glm::vec3(0.0f, 1.0f, 0.0f);
+	const glm::vec3 BLUE = glm::vec3(0.0f, 0.0f, 1.0f);
+	const glm::vec3 ORANGE = glm::vec3(1.0f, 0.5f, 0.0f);
+	const glm::vec3 YELLOW = glm::vec3(1.0f, 1.0f, 0.0f);
+	const glm::vec3 WHITE = glm::vec3(1.0f, 1.0f, 1.0f);
+
 
 	void AddSidePosition(int sideType, int direction, std::vector<glm::vec3>& positionArray);
 	void AddSideColor(int sideType, int direction, std::vector<glm::vec3>& colorArray);
+	void AddSideTexCoords(std::vector<glm::vec2>& texCoordArray);
 
 	GLuint m_arrayBufferObject;
-	GLuint m_vertexBufferObject[2];
+	GLuint m_vertexBufferObject[3];
 	GLuint m_shaderProgram;
 	GLuint m_transformLocation;
-
-
+	GLuint m_texture;
 };

@@ -28,7 +28,8 @@ void RenderWindow(GLFWwindow* window) {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	
-	float bgColor[3] = { 0.5, 0.5, 0.5 };
+	//BACKGROUND COLOR
+	float bgColor[3] = { 0.2, 0.2, 0.2 };
 
 	glClearColor(bgColor[0], bgColor[1], bgColor[2], 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

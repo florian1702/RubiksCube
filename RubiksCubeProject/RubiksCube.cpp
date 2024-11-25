@@ -8,8 +8,7 @@
 void RubiksCube::Initialize(const RubiksGameInterface& gameInterface) {
 	m_cubieRenderer.Initialize();
 	
-	//Offset + 0.1f damit die Luecken zwischen den Minicubies erscheinen.
-	float offset = m_cubieRenderer.GetCubieExtension() + 0.1f;
+	float offset = m_cubieRenderer.GetCubieExtension();
 
 	for (int x = 0; x < 3; x++)
 		for (int y = 0; y < 3; y++)
