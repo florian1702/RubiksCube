@@ -38,11 +38,6 @@ void RubiksGameInterface::Render(float aspectRatio)
 	m_rubiksCube.Render(m_projection * m_view);
 }
 
-void RubiksGameInterface::ClearResources()
-{
-	m_rubiksCube.ClearResources();
-}
-
 void RubiksGameInterface::Update(double deltaTime)
 {
 	m_deltaTime = static_cast<float>(deltaTime);
@@ -68,4 +63,9 @@ void RubiksGameInterface::Update(double deltaTime)
 
 	QueueMatrixRecalculation();
 
+}
+
+void RubiksGameInterface::ClearResources()
+{
+	m_rubiksCube.ClearResources();
 }

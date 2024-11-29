@@ -16,61 +16,63 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{130a23c0-2bb9-466a-a302-65e659a03b02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Fertig">
-      <UniqueIdentifier>{0982c425-d2d3-40fa-8ec3-c5da26824265}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Fertig">
-      <UniqueIdentifier>{e8258b8f-e218-43e4-a1e8-405281bbabad}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CubieRenderer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="RubiksGameInterface.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="RubiksCube.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderUtil.cpp">
-      <Filter>Quelldateien\Fertig</Filter>
+    <ClCompile Include="CubieRenderer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="KeyboardObserver.cpp">
-      <Filter>Quelldateien\Fertig</Filter>
+      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Quelldateien\Fertig</Filter>
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderUtil.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CubieRenderer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="RubiksGameInterface.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="RubiksCube.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardObserver.h">
-      <Filter>Headerdateien\Fertig</Filter>
+    <ClInclude Include="Cubie.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderUtil.h">
-      <Filter>Headerdateien\Fertig</Filter>
+    <ClInclude Include="CubieRenderer.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="IGameInterface.h">
-      <Filter>Headerdateien\Fertig</Filter>
+      <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Cubie.h">
-      <Filter>Headerdateien\Fertig</Filter>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="KeyboardObserver.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderUtil.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="VShader.glsl">
+      <Filter>Shader</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="FShader.glsl">
+      <Filter>Shader</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Texture.jpg">
@@ -78,13 +80,8 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="VShader.glsl">
-      <Filter>Shader</Filter>
-    </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FShader.glsl">
-      <Filter>Shader</Filter>
-    </None>
+    <Media Include="rubiks_sfx.wav">
+      <Filter>Ressourcendateien</Filter>
+    </Media>
   </ItemGroup>
 </Project>

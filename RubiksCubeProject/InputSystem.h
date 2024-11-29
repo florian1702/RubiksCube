@@ -61,7 +61,6 @@ private:
 	glm::vec3 m_dragStartRayOrigin;
 	glm::vec3 m_dragStartRayDirection;
 
-
 	glm::mat4 m_viewProjection;
 	glm::mat4 m_view;
 	glm::mat4 m_projection;

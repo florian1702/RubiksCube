@@ -26,9 +26,9 @@ class RubiksGameInterface : public IGameInterface
 		mutable GLFWwindow* m_window;
 		float m_deltaTime;
 
-		float MAX_CAMERA_DISTANCE = 40.0f;
-		float MIN_CAMERA_DISTANCE = 10.0f;
-		float m_CameraDistance;
+		float MAX_CAMERA_DISTANCE = 20.0f;
+		float MIN_CAMERA_DISTANCE = 7.5f;
+		float m_CameraDistance = 10.0f;
 		mutable bool m_recalculationNeeded;
 		float m_currentAspectRatio;
 
