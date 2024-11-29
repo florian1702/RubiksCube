@@ -39,9 +39,9 @@
 
 - [x] Render all cubs
 - [x] Mouse control of the camera
-- [ ] Mouse control of the cube
-- [ ] Animations
-- [ ] Sounds
+- [x] Mouse control of the cube
+- [x] Animations
+- [x] Sounds
 - [ ] More complex graphics programming (shaders)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
