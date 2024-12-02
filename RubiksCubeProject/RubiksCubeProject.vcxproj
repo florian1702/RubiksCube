@@ -150,10 +150,7 @@
     <ClInclude Include="ShaderUtil.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Texture.jpg">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </Image>
+    <Image Include="Texture.png" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="VShader.glsl">

@@ -75,7 +75,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Texture.jpg">
+    <Image Include="Texture.png">
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>
