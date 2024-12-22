@@ -28,6 +28,8 @@
 
 <h3 align="center">Rubiks Cube (Work in Progrss)</h3>
 
+[![Rubiks Cube](https://img.youtube.com/vi/Nmie3Ga78aw/0.jpg)](https://youtu.be/Nmie3Ga78aw)
+
   <p align="center">
     Completely interactive Rubics Cube, which I am implementing from scratch in C++ with OpenGL
   </p>
