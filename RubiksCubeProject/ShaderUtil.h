@@ -8,7 +8,7 @@
 class ShaderUtil {
 public:
 	static GLuint CreateShaderProgram(const char* vertexFilename, const char* fragmentFilename);
-	static GLuint LoadTexture(const std::string& filePath);
+	static GLuint LoadTexture(const char* textureFilename);
 
 private:
 	static std::string LoadFile(const char* fileName);

@@ -48,7 +48,7 @@ void CubieRenderer::Initialize() {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Load Texture
-	m_texture = ShaderUtil::LoadTexture("Texture.jpg");
+	m_texture = ShaderUtil::LoadTexture("Texture.png");
 }
 
 

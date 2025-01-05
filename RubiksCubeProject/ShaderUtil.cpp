@@ -60,14 +60,14 @@ GLuint ShaderUtil::CreateShaderProgram(const char* vertexFilename, const char* f
 	return shaderProgram;	
 }
 
-GLuint ShaderUtil::LoadTexture(const std::string& filePath)
+GLuint ShaderUtil::LoadTexture(const char* textureFilename)
 {
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	int width, height, nrChannels;
-	unsigned char* data = stbi_load("Texture.jpg", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load(textureFilename, &width, &height, &nrChannels, 0);
 	if (data) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);

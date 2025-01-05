@@ -1,7 +1,4 @@
 #include "RubiksGameInterface.h"
-#include "CubieRenderer.h"
-
-#include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <GLFW/glfw3.h>
 
