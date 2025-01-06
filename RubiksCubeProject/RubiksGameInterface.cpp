@@ -9,10 +9,6 @@ void RubiksGameInterface::Initialize(GLFWwindow* window)
 	//SETUP INPUT SYSTEM
 	m_input.Initialize(window);
 	m_input.ObserverKey(GLFW_KEY_SPACE);
-	m_input.ObserverKey(GLFW_KEY_RIGHT);
-	m_input.ObserverKey(GLFW_KEY_LEFT);
-	m_input.ObserverKey(GLFW_KEY_UP);
-	m_input.ObserverKey(GLFW_KEY_DOWN);
 
 	//SETUP RUBIKS CUBE
 	m_rubiksCube.Initialize(*this);

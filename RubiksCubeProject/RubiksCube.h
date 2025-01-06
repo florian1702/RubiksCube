@@ -3,15 +3,13 @@
 #include "InputSystem.h"
 #include "Cubie.h"
 
-#include <iostream>
 #include <map>
-#include <string>
-#include <vector>
 #include <array>
 #include <glm/ext.hpp>
 
 class RubiksGameInterface;
 
+// The RubiksCube class handles the initialization, rendering, user input, rotation logic, and animation for the Rubik's Cube simulation.
 class RubiksCube {
 public:
 	enum class AnimationState {
@@ -41,7 +39,6 @@ public:
 	void Render(const glm::mat4& viewProjection);
 	void Update(const RubiksGameInterface& gameInterface);
 	void ClearResources();
-
 
 private:
 	//INPUT 
@@ -86,7 +83,6 @@ private:
 	float m_totalFaceRotationDegree;
 	std::array<std::array<glm::quat, 3>, 3> m_oldVisibleRotations;
 	float m_tickCounter;
-
 
 	//CACHE
 	glm::vec2 m_previousScreenPosition;

@@ -1,9 +1,8 @@
-//FERTIG
-
 #pragma once
 
 struct GLFWwindow;
 
+// Interface class for game-specific logic (to be extended by concrete game interfaces)
 class IGameInterface {
 public:
 	virtual void Initialize() {}

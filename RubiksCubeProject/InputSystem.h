@@ -5,6 +5,7 @@
 #include <memory>
 #include <glm/mat4x4.hpp>
 
+// The InputSystem class handles keyboard and mouse input, including key states, mouse actions, and 3D-to-screen transformations.
 class InputSystem {
 public:
 

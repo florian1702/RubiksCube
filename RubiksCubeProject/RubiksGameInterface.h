@@ -1,9 +1,9 @@
 #pragma once
 #include "IGameInterface.h"
-#include "CubieRenderer.h"
 #include "InputSystem.h"
 #include "RubiksCube.h"
 
+// The RubiksGameInterface class manages the Rubik's Cube game logic, including user input, rendering, matrix calculations, and updates.
 class RubiksGameInterface : public IGameInterface
 {
 	public:
@@ -26,9 +26,12 @@ class RubiksGameInterface : public IGameInterface
 		mutable GLFWwindow* m_window;
 		float m_deltaTime;
 
+		// Constants for camera zoom level limits
 		float MAX_CAMERA_DISTANCE = 20.0f;
 		float MIN_CAMERA_DISTANCE = 7.5f;
 		float m_CameraDistance = 10.0f;
+
+		// Matrix recalculation flag
 		mutable bool m_recalculationNeeded;
 		float m_currentAspectRatio;
 

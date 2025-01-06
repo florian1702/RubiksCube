@@ -3,6 +3,7 @@
 #include <glm/gtx/intersect.hpp>
 #include <iomanip>
 #define NOMINMAX
+#include <iostream>
 #include <windows.h>
 
 void RubiksCube::Initialize(const RubiksGameInterface& gameInterface) {

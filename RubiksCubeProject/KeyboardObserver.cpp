@@ -1,5 +1,3 @@
-//FERTIG
-
 #include "KeyboardObserver.h"
 #include "GLFW/glfw3.h"
 
@@ -21,6 +19,4 @@ void KeyboardObserver::Update() {
 	m_wasPressed = isDown && !m_wasDown;
 	m_wasReleased = !isDown && m_wasDown;
 	m_wasDown = isDown;
-
-	// mit einer Callbackfunktion kann man den Key abfragen
 }

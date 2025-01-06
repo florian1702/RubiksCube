@@ -1,9 +1,8 @@
-//FERTIG
-
-
 #pragma once
 
 struct GLFWwindow;
+
+// Class to observe the state of a specific key in a GLFW window
 class KeyboardObserver {
 public:
 	KeyboardObserver();

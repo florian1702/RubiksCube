@@ -3,16 +3,20 @@
 #include <GL/glew.h>
 #include <vector>
 
+// The CubieRenderer class is responsible for rendering Rubik's Cube cubies, including their positions, colors, and textures.
 class CubieRenderer {
 public:
 	void Initialize();
 	void Render(const glm::mat4& viewProjection, const glm::mat4& model);
 	void ClearResources();
 
+	// Returns the size of the cubie
 	float GetCubieExtension();
 	
 private:
-	const float m_offset = 0.5f;
+	const float m_offset = 0.5f; // Offset for cubie positioning
+
+	// Cubie colors
 	const glm::vec3 RED = glm::vec3(1.0f, 0.0f, 0.0f);
 	const glm::vec3 GREEN = glm::vec3(0.0f, 1.0f, 0.0f);
 	const glm::vec3 BLUE = glm::vec3(0.0f, 0.0f, 1.0f);
