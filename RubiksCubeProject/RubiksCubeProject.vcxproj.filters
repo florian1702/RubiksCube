@@ -73,15 +73,11 @@
     <CopyFileToFolders Include="FShader.glsl">
       <Filter>Shader</Filter>
     </CopyFileToFolders>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Texture.png">
+    <CopyFileToFolders Include="Texture.png">
       <Filter>Ressourcendateien</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="rubiks_sfx.wav">
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="rubiks_sfx.wav">
       <Filter>Ressourcendateien</Filter>
-    </Media>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>
