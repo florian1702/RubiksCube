@@ -24,7 +24,6 @@ public:
 
 	//GENERAL
 	void Initialize(GLFWwindow* window, const glm::mat4& projection = glm::mat4(1.0f), const glm::mat4& view = glm::mat4(1.0f));
-	void SetWindow(GLFWwindow* window) { m_window = window; };
 	void Update();
 	void ObserverKey(int key);
 	void SetViewProjection(const glm::mat4& projection, const glm::mat4& view);
@@ -35,7 +34,6 @@ public:
 	glm::vec2 GetScreenPosition() const { return m_screenPosition; }
 	glm::vec2 GetDragStartScreenPosition() const { return m_dragStartScreenPosition; }
 	void GetPickingRay(glm::vec3& out_origin, glm::vec3& out_direction) const;
-	void GetDragStartPickingRay(glm::vec3& out_origin, glm::vec3& out_direction) const;
 	glm::ivec2 GetMouseWheelScrollOffset() const;
 
 	//KEYBOARD

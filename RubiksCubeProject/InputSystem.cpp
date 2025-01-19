@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 
 void InputSystem::Initialize(GLFWwindow* window, const glm::mat4& projection, const glm::mat4& view) {
-	SetWindow(window);
+	m_window = window;
 	SetViewProjection(projection, view);
 
 	//CALLBACK FOR SCROLLLING
@@ -12,7 +12,7 @@ void InputSystem::Initialize(GLFWwindow* window, const glm::mat4& projection, co
 }
 
 void InputSystem::Update() {
-	//UPDATE KEYBOARD OBSERVER
+	//UPDATE KEYBOARD OBSERVERS
 	for (auto i = m_keyMapper.begin(); i != m_keyMapper.end(); i++)
 		i->second->Update();
 
@@ -38,35 +38,36 @@ void InputSystem::SetViewProjection(const glm::mat4& projection, const glm::mat4
 	m_view = view;
 }
 
-//MOUSE
+// GENERATES A PICKING RAY BASED ON THE CURRENT MOUSE POSITION
 void InputSystem::GetPickingRay(glm::vec3& out_origin, glm::vec3& out_direction) const {
+	// NORMALIZE SCREEN POSITION [-1, 1]
 	glm::vec2 position = NormalizeScreenVector(m_screenPosition);
-
 	position.x = (position.x) * 2.0f - 1.0f;
 	position.y = 1.0f - (position.y) * 2.0f;
 
-	glm::vec4 nearPoint = glm::vec4(position.x, position.y, -0.99f, 1.0f);
+	// DEFINE NEAR AND FAR POINTS IN CLIP SPACE
+	glm::vec4 nearPoint = glm::vec4(position.x, position.y, 0.01f, 1.0f);
 	glm::vec4 farPoint = nearPoint;
 	farPoint.z = 0.99f;
 
+	// TRANSFORM POINTS FROM CLIP SPACE TO WORLD SPACE
 	glm::mat4 inverse = glm::inverse(m_viewProjection);
 	nearPoint = inverse * nearPoint;
 	farPoint = inverse * farPoint;
 
+	// DIVIDE BY W TO RETURN TO 3D COORDINATES
 	nearPoint /= nearPoint.w;
 	farPoint /= farPoint.w;
 
+	// SET OUTPUT ORIGIN TO NEAR POINT
 	out_origin = nearPoint;
 
+	// CALCULATE AND NORMALIZE THE RAY DIRECTION
 	out_direction = farPoint - nearPoint;
 	out_direction = glm::normalize(out_direction);
 }
 
-void InputSystem::GetDragStartPickingRay(glm::vec3& out_origin, glm::vec3& out_direction) const {
-	out_origin = glm::vec3(m_dragStartRayOrigin);
-	out_direction = glm::vec3(m_dragStartRayDirection);
-}
-
+// NORMALIZES SCREEN POSITION TO THE RANGE [0, 1] BASED ON WINDOW SIZE
 glm::vec2 InputSystem::NormalizeScreenVector(const glm::vec2& screenPosition) const {
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(m_window, &screenWidth, &screenHeight);
@@ -119,28 +120,30 @@ glm::ivec2 InputSystem::GetMouseWheelScrollOffset() const {
 
 //HELPING METHODS
 void InputSystem::UpdateClickState(MouseButton mouseButton, ClickState& clickState) {
+
+	//BUTTON IS NOT PRESSED
 	if (!(glfwGetMouseButton(m_window, mouseButton) == GLFW_PRESS)) {
+		//IF PREVIOUSLY CLICKED OR HELD, SET TO RELEASE
 		if (clickState == ClickState::CLICK || clickState == ClickState::HOLD)
 			clickState = ClickState::RELEASE;
+		//OTHERWISE SET TO NO_ACTION IF IT WAS THE ACTIVE BUTTON
 		else if (m_activeMouseButton == mouseButton) {
 			m_activeMouseButton = NO_BUTTON;
 			clickState = ClickState::NO_ACTION;
 		}
 	}
+	//BUTTON WAS RELEASED OR INACTIVE AND NOW PRESSED
 	else if (clickState == ClickState::NO_ACTION || clickState == ClickState::RELEASE) {
 		m_activeMouseButton = mouseButton;
 		clickState = ClickState::CLICK;
-
 		GetPickingRay(m_dragStartRayOrigin, m_dragStartRayDirection);
 		m_dragStartScreenPosition = GetScreenPosition();
-
-		m_dragStartScreenPosition = GetScreenPosition();
 	}
+	//BUTTON IS HELD
 	else {
 		clickState = ClickState::HOLD;
 	}
 }
-
 
 //STATIC
 glm::ivec2 InputSystem::m_mouseScrollOffset = glm::vec2(0.0f, 0.0f);

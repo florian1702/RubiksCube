@@ -47,7 +47,7 @@ void RenderWindow(GLFWwindow* window) {
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
 
-    // Pause the thread for 8 ms -> lower frame rate
+    // Pause the thread for 8 ms -> lower frame rate (slower animations)
     std::this_thread::sleep_for(std::chrono::milliseconds(8));
 }
 
