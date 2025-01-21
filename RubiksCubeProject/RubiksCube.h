@@ -2,16 +2,17 @@
 #include "CubieRenderer.h"
 #include "InputSystem.h"
 #include "Cubie.h"
-
 #include <map>
 #include <array>
 #include <glm/ext.hpp>
 
 class RubiksGameInterface;
 
-// The RubiksCube class handles the initialization, rendering, user input, rotation logic, and animation for the Rubik's Cube simulation.
+// RUBIKSCUBE CLASS: MANAGES LOGIC FOR THE RUBIK'S CUBE, INCLUDING RENDERING, INPUT, AND ANIMATIONS
 class RubiksCube {
 public:
+
+	// ENUMS FOR ANIMATION STATE, ROTATION AXES, AND CUBE FACES
 	enum class AnimationState {
 		STABLE = 0,
 		ROTATING = 1,
@@ -41,38 +42,35 @@ public:
 	void ClearResources();
 
 private:
-	//INPUT 
+	// HANDLES MOUSE INTERACTION AND USER INPUT
 	void UpdateMouse();
 
-	//CUBE
+	// ROTATES THE ENTIRE CUBE USING CAMERA DRAG
 	void RotateCube();
 
-	//FACE ROTATION
+	// FACE INTERACTION AND ROTATION LOGIC
 	void DetermineClickedFace();
 	void DetermineActiveFace();
 	glm::vec3 FindClosestDirection(const glm::vec3& referenceDirection, const glm::vec3& vectorU, const glm::vec3& vectorV);
 	void DeltaRotateFace();
 
-	//ANIMATION
+	// ANIMATION
 	void StartSnappingAnimation();
 	void UpdateAnimation(float deltaTime);
 
-	//OTHER HELPING METHODS
+	// HELPER METHOD FOR SLICE-WISE ITERATION
 	template<typename Func>
 	void ForEachInSlice(Func func);
 
-	//COMPONENTS
-	CubieRenderer m_cubieRenderer;
-	const InputSystem* m_input;
-	
-	//CUBE
-	glm::quat m_modelRotation;
-	std::array <std::array <std::array <Cubie*, 3>, 3>, 3> m_grid;
+	// COMPONENTS
+	CubieRenderer m_cubieRenderer;      // RENDERS INDIVIDUAL CUBIES
+	const InputSystem* m_input;        // HANDLES INPUT DATA
+	glm::quat m_modelRotation;         // STORES THE GLOBAL CUBE ROTATION
+	std::array<std::array<std::array<Cubie*, 3>, 3>, 3> m_grid; // 3D GRID OF CUBIES
 
 	//FACE ROTATION
 	CubeFace m_clickedFace = CubeFace::UNSET_FACE;
-
-	Axis m_activeFaceNormal = Axis::UNSET_AXIS;
+	Axis m_activeRotationAxis = Axis::UNSET_AXIS;
 	int m_xSliceIndex = 0;
 	int m_ySliceIndex = 0;
 	int m_zSliceIndex = 0;
@@ -84,9 +82,9 @@ private:
 	std::array<std::array<glm::quat, 3>, 3> m_oldVisibleRotations;
 	float m_tickCounter;
 
-	//CACHE
+	// CACHE VARIABLES FOR MOUSE DRAG
 	glm::vec2 m_previousScreenPosition;
 
-	//STATIC
+	// STATIC NORMALS FOR CUBE FACES
 	const static std::map<int, glm::vec3> NORMALS_OF_FACES;
 };

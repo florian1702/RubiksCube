@@ -80,14 +80,15 @@ glm::vec2 InputSystem::NormalizeScreenVector(const glm::vec2& screenPosition) co
 	return normPos;
 }
 
+// CONVERTS WORLD POSITION TO SCREEN COORDINATES
 glm::vec2 InputSystem::WorldToScreen(const glm::vec3& worldPosition) const {
-	// Erstellen Sie eine 4D-Homogenisierungsmatrix für den gegebenen 3D-Weltvektor
+	// CREATE A HOMOGENEOUS 4D VECTOR FROM WORLD POSITION
 	glm::vec4 h_WorldPosition = glm::vec4(worldPosition, 1.0f);
 
-	// Multiplizieren Sie die Homogenisierungsmatrix mit der Projektion und View-Matrix
+	// TRANSFORM FROM WORLD TO CLIP SPACE USING VIEW AND PROJECTION MATRICES
 	glm::vec4 clipSpacePosition = m_viewProjection * h_WorldPosition;
 
-	// Konvertieren Sie die Clip-Space-Position in Screen-Space
+	// CONVERT FROM CLIP SPACE TO SCREEN SPACE
 	glm::vec2 screenPosition;
 	screenPosition.x = (clipSpacePosition.x / clipSpacePosition.w + 1.0f) / 2.0f;
 	screenPosition.y = (1.0f - (clipSpacePosition.y / clipSpacePosition.w + 1.0f) / 2.0f);
@@ -95,17 +96,21 @@ glm::vec2 InputSystem::WorldToScreen(const glm::vec3& worldPosition) const {
 	return screenPosition;
 }
 
+// CONVERTS SCREEN POSITION TO WORLD COORDINATES
 glm::vec3 InputSystem::ScreenToWorld(const glm::vec2& screenPosition) const {
+	// NORMALIZE SCREEN POSITION [-1, 1]
 	glm::vec2 position = screenPosition;
-
 	position.x = (position.x) * 2.0f - 1.0f;
 	position.y = 1.0f - (position.y) * 2.0f;
 
+	// DEFINE NEAR POINT IN CLIP SPACE
 	glm::vec4 nearPoint = glm::vec4(position.x, position.y, -0.99f, 1.0f);
 
+	// TRANSFORM FROM CLIP SPACE TO WORLD SPACE USING INVERSE VIEW PROJECTION MATRIX
 	glm::mat4 inverse = glm::inverse(m_viewProjection);
 	nearPoint = inverse * nearPoint;
 
+	// DIVIDE BY W TO RETURN TO 3D COORDINATES
 	nearPoint /= nearPoint.w;
 
 	return nearPoint;

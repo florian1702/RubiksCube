@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <string>
 
-// The ShaderUtil class provides static methods for loading shaders, textures, and handling OpenGL-related errors.
+// SHADERUTIL CLASS: PROVIDES METHODS FOR LOADING SHADERS, TEXTURES, AND HANDLING ERRORS
 class ShaderUtil {
 public:
 	static GLuint CreateShaderProgram(const char* vertexFilename, const char* fragmentFilename);

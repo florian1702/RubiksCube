@@ -2,7 +2,7 @@
 
 struct GLFWwindow;
 
-// Class to observe the state of a specific key in a GLFW window
+// KEYBOARDOBSERVER CLASS: OBSERVES THE STATE OF A SPECIFIC KEY
 class KeyboardObserver {
 public:
 	KeyboardObserver();

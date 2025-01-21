@@ -3,7 +3,7 @@
 #include "InputSystem.h"
 #include "RubiksCube.h"
 
-// The RubiksGameInterface class manages the Rubik's Cube game logic, including user input, rendering, matrix calculations, and updates.
+// RUBIKSGAMEINTERFACE CLASS: MANAGES GAME LOGIC, INPUT, RENDERING, AND CAMERA SETTINGS
 class RubiksGameInterface : public IGameInterface
 {
 	public:
@@ -13,11 +13,9 @@ class RubiksGameInterface : public IGameInterface
 		virtual void Update(double deltaTime) override;
 
 		const InputSystem& GetInputComponent() const { return m_input; }
-		const glm::mat4& GetProjectionMatrix() const { return m_projection; }
-		const glm::mat4& GetViewMatrix() const { return m_view; }
-		GLFWwindow* GetWindow() const { return m_window; }
 		float GetDeltaTime() const { return m_deltaTime; }
 
+		// TRIGGERS MATRIX RECALCULATION FOR THE NEXT FRAME
 		void QueueMatrixRecalculation() const { m_recalculationNeeded = true; }
 
 	private:
@@ -26,12 +24,12 @@ class RubiksGameInterface : public IGameInterface
 		mutable GLFWwindow* m_window;
 		float m_deltaTime;
 
-		// Constants for camera zoom level limits
-		float MAX_CAMERA_DISTANCE = 20.0f;
-		float MIN_CAMERA_DISTANCE = 7.5f;
+		// CAMERA SETTINGS
+		const float MAX_CAMERA_DISTANCE = 20.0f;
+		const float MIN_CAMERA_DISTANCE = 7.5f;
 		float m_CameraDistance = 10.0f;
 
-		// Matrix recalculation flag
+		// MATRIX RECALCULATION FLAG
 		mutable bool m_recalculationNeeded;
 		float m_currentAspectRatio;
 

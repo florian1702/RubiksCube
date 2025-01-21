@@ -1,5 +1,4 @@
 #pragma once
-
 #include "KeyboardObserver.h"
 #include <map>
 #include <memory>
