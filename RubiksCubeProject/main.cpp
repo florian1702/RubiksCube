@@ -7,94 +7,96 @@
 #include <iostream>
 #include <thread>
 
-// Game interface and implementation instance
+// GAME INTERFACE INSTANCES
 RubiksGameInterface gRubiksGameInterface;
 IGameInterface* gUsedInterface;
 
-// Timing variables
+// TIMING VARIABLES
 double lastTime = glfwGetTime();
 double deltaTime = 0.0;
 
-// Renders the window content
+// RENDERS THE CONTENT OF THE WINDOW
 void RenderWindow(GLFWwindow* window) {
-    gUsedInterface->Update(deltaTime); // Update game logic
+    gUsedInterface->Update(deltaTime); // UPDATE GAME LOGIC WITH DELTA TIME
 
-    // Get window size and calculate aspect ratio
+    // GET WINDOW SIZE AND CALCULATE ASPECT RATIO
     int screenWidth, screenHeight;
     glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
     float aspectRatio = static_cast<float>(screenWidth) / static_cast<float>(screenHeight);
 
-    // Set viewport and enable depth testing
+    // CONFIGURE VIEWPORT AND ENABLE DEPTH TESTING
     glViewport(0, 0, screenWidth, screenHeight);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 
-    // Clear the screen with a background color
+    // CLEAR THE SCREEN WITH A BACKGROUND COLOR
     float bgColor[3] = { 0.2f, 0.2f, 0.2f };
     glClearColor(bgColor[0], bgColor[1], bgColor[2], 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Render only if the window is not minimized (without it crashed)
+    // RENDER ONLY IF THE WINDOW IS NOT MINIMIZED
     if (!glfwGetWindowAttrib(window, GLFW_ICONIFIED)) {
-        gUsedInterface->Render(aspectRatio); 
+        gUsedInterface->Render(aspectRatio);  // DELEGATE RENDERING TO THE GAME INTERFACE
     }
 
-    // Swap front and back buffers
+    // SWAP THE FRONT AND BACK BUFFERS
     glfwSwapBuffers(window);
 
-    // Calculate delta time for the current frame
+    // CALCULATE DELTA TIME FOR THIS FRAME
     double currentTime = glfwGetTime();
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
 
-    // Pause the thread for 8 ms -> lower frame rate (slower animations)
+    // LIMIT FRAME RATE BY PAUSING FOR 8 MS
     std::this_thread::sleep_for(std::chrono::milliseconds(8));
 }
 
-// Main loop for processing events and rendering
+// MAIN LOOP: PROCESSES EVENTS AND RENDERS THE FRAME
 void RunCoreLoop(GLFWwindow* window) {
-    glfwPollEvents();       
-    RenderWindow(window);
+    glfwPollEvents();       // PROCESS ALL WINDOW EVENTS
+    RenderWindow(window);   // RENDER THE CURRENT FRAME
 }
 
-// Initializes GLFW, GLEW, and creates a window
+// INITIALIZES GLFW, GLEW, AND CREATES A WINDOW
 GLFWwindow* InitializeSystem() {
-    glfwInit(); // Initialize GLFW
+    glfwInit(); // INITIALIZE THE GLFW LIBRARY
 
-    // Specify OpenGL version and profile
+    // CONFIGURE THE OPENGL CONTEXT VERSION (3.3 CORE PROFILE)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
-    // Create the window
+    // CREATE THE APPLICATION WINDOW
     GLFWwindow* window = glfwCreateWindow(1024, 768, "Rubiks Cube", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     glfwSetWindowRefreshCallback(window, RenderWindow);
 
-    // Initialize GLEW
-    glewExperimental = true;
-    glewInit();
+    // INITIALIZE GLEW
+    glewExperimental = true;  // ENSURE GLEW USES MODERN OPENGL FUNCTIONS
+    glewInit();               // LOAD OPENGL FUNCTION POINTERS
 
-    // Initialize the game interface
+    // INITIALIZE THE GAME INTERFACE
     gUsedInterface->Initialize(window);
     return window;
 }
 
-// Shuts down the system and releases resources
+// RELEASES RESOURCES AND TERMINATES GLFW
 void ShutdownSystem() {
     gUsedInterface->ClearResources();
     glfwTerminate();
 }
 
-// Program entry point
+// PROGRAM ENTRY POINT
 int main() {
-    gUsedInterface = &gRubiksGameInterface;      // Set the active game interface
-    GLFWwindow* window = InitializeSystem();     // Initialize the system
+    gUsedInterface = &gRubiksGameInterface;      // SET THE ACTIVE GAME INTERFACE
+    GLFWwindow* window = InitializeSystem();     // INITIALIZE SYSTEM COMPONENTS
 
-    while (!glfwWindowShouldClose(window)) {     // Main loop until the window is closed
+    // MAIN LOOP: RUN UNTIL THE WINDOW IS CLOSED
+    while (!glfwWindowShouldClose(window)) { 
         RunCoreLoop(window);
     }
 
-    ShutdownSystem();                            // Clean up and exit
+    // CLEAN UP AND EXIT
+    ShutdownSystem();
 }

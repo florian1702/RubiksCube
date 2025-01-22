@@ -77,7 +77,7 @@ void RubiksCube::UpdateMouse() {
 
 			case InputSystem::HOLD:
 				if (m_animationState == AnimationState::STABLE) {
-					// START ROTATION IF FACE IS CLICKED AND DRAG DISTANCE IS ENOUGH
+					// START ROTATION IF FACE IS CLICKED AND DRAG DISTANCE IS ENOUGH (DEAD ZONE = 10)
 					if (m_clickedFace != CubeFace::UNSET_FACE &&
 						glm::length(m_input->GetScreenPosition() - m_input->GetDragStartScreenPosition()) > 10) {
 						DetermineActiveSlice();
@@ -407,7 +407,7 @@ void RubiksCube::UpdateAnimation(float deltaTime) {
 		if (m_totalFaceRotationDegree == 270)
 			rotationCount = 3;
 
-		// APPLY THE ROTATION TO THE SLICE
+		// APPLY THE ROTATION TO THE SLICE IN THE GRID ARRAY
 		for (int i = 0; i < rotationCount; i++) {
 			// STORE THE CURRENT SLICE IN A TEMPORARY ARRAY
 			std::array<std::array<Cubie*, 3>, 3> newFace;
