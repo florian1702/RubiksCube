@@ -79,7 +79,7 @@ void CubieRenderer::Render(const glm::mat4& viewProjection, const glm::mat4& mod
 }
 
 void CubieRenderer::ClearResources() {
-	glDeleteBuffers(2, m_vertexBufferObject);
+	glDeleteBuffers(3, m_vertexBufferObject);
 	glDeleteVertexArrays(1, &m_arrayBufferObject);
 	glDeleteProgram(m_shaderProgram);
 }

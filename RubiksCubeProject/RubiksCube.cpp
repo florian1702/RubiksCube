@@ -80,13 +80,13 @@ void RubiksCube::UpdateMouse() {
 					// START ROTATION IF FACE IS CLICKED AND DRAG DISTANCE IS ENOUGH
 					if (m_clickedFace != CubeFace::UNSET_FACE &&
 						glm::length(m_input->GetScreenPosition() - m_input->GetDragStartScreenPosition()) > 10) {
-						DetermineActiveFace();
+						DetermineActiveSlice();
 						m_animationState = AnimationState::ROTATING;
 					}
 				}
 				// UPDATE ROTATION WHILE DRAGGING
 				else if (m_animationState == AnimationState::ROTATING && m_activeRotationAxis != Axis::UNSET_AXIS) {
-					DeltaRotateFace();
+					DeltaRotateSlice();
 				}
 				break;
 
@@ -186,7 +186,7 @@ void RubiksCube::DetermineClickedFace() {
 }
 
 // DETERMINE THE ACTIVE FACE AND DRAG DIRECTION FOR ROTATING A SLICE
-void RubiksCube::DetermineActiveFace() {
+void RubiksCube::DetermineActiveSlice() {
 	// TRANSFORM THE SAVED FACE INTERSECTION POINT INTO OBJECT SPACE
 	glm::vec3 intersectionPointInObjectSpace
 		= glm::inverse(glm::mat3_cast(m_modelRotation)) * m_facePlaneIntersectionPoint;
@@ -218,6 +218,8 @@ void RubiksCube::DetermineActiveFace() {
 		glm::mat3_cast(m_modelRotation) * NORMALS_OF_FACES.at(static_cast<int>(m_clickedFace)) * (planeOffset),
 		glm::mat3_cast(m_modelRotation) * NORMALS_OF_FACES.at(static_cast<int>(m_clickedFace)),
 		intersectionDistance);
+
+	// COMPUTE THE CURRENT INTERSECTION POINT IN OBJECT SPACE
 	glm::vec3 currenIntersectionPointInObjectSpace =
 		glm::inverse(glm::mat3_cast(m_modelRotation)) * (origin + intersectionDistance * direction);
 
@@ -254,14 +256,14 @@ void RubiksCube::DetermineActiveFace() {
 }
 
 // ROTATE THE SELECTED FACE BASED ON MOUSE DRAG INPUT
-void RubiksCube::DeltaRotateFace() {
+void RubiksCube::DeltaRotateSlice() {
 	// CALCULATE THE MOUSE DRAG VECTOR (CURRENT SCREEN POSITION - PREVIOUS POSITION)
 	glm::vec2 deltaDragVector = m_input->GetScreenPosition() - m_previousScreenPosition;
 
 	// DETERMINE THE ACTIVE, CLICKED, AND DRAG AXES
-	int activeFaceIndex = static_cast<int>(m_activeRotationAxis);		// INDEX OF ACTIVE FACE NORMAL
+	int activeRotationAxisIndex = static_cast<int>(m_activeRotationAxis);		// INDEX OF ACTIVE FACE NORMAL
 	int clickedFaceIndex = static_cast<int>(m_clickedFace) % 3;     // INDEX OF THE CLICKED FACE
-	int dragFaceIndex = 3 - activeFaceIndex - clickedFaceIndex;     // REMAINING FACE THAT DEFINES DRAG
+	int dragFaceIndex = 3 - activeRotationAxisIndex - clickedFaceIndex;     // REMAINING FACE THAT DEFINES DRAG
 
 	// CONVERT DRAG NORMAL TO WORLD SPACE USING THE CURRENT CUBE ROTATION
 	glm::vec3 dragNormalInWorld = glm::mat3_cast(m_modelRotation) * NORMALS_OF_FACES.at(dragFaceIndex);
@@ -374,7 +376,7 @@ void RubiksCube::StartSnappingAnimation() {
 	glm::mat4 totalSnappedRotation = glm::rotate(
 		glm::mat4(1.0f),                                        // IDENTITY MATRIX
 		glm::radians(m_totalFaceRotationDegree),                // SNAPPED ANGLE (IN RADIANS)
-		NORMALS_OF_FACES.at(static_cast<int>(m_activeRotationAxis) % 3) // ACTIVE FACE NORMAL VECTOR
+		NORMALS_OF_FACES.at(static_cast<int>(m_activeRotationAxis) % 3) // ACTIVE FACE NORMAL VECTOR (AXIS)
 	);
 
 	// APPLY THE SNAPPED ROTATION TO ALL CUBIES IN THE ACTIVE SLICE

@@ -50,9 +50,9 @@ private:
 
 	// FACE INTERACTION AND ROTATION LOGIC
 	void DetermineClickedFace();
-	void DetermineActiveFace();
+	void DetermineActiveSlice();
 	glm::vec3 FindClosestDirection(const glm::vec3& referenceDirection, const glm::vec3& vectorU, const glm::vec3& vectorV);
-	void DeltaRotateFace();
+	void DeltaRotateSlice();
 
 	// ANIMATION
 	void StartSnappingAnimation();

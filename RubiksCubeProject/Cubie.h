@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 
-// Represents a single cubie in a Rubik's cube
+// REPRESENTS A SINGLE CUBIE IN THE RUBIKS CUBE
 struct Cubie {
 	int m_id;
 	glm::vec3 m_position = glm::vec3(0.0f);
