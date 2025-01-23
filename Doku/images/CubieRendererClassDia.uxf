@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>580</y>
+      <w>600</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>ShaderUtil
+--
+
+--
+_ + CreateShaderProgram(const char* vertexFilename, const char* fragmentFilename) : GLuint_
+_ + LoadTexture(const char* textureFilename) : GLuint_
+_ - LoadFile(const char* fileName) : std::string _
+_ - PrintShaderLog(GLuint shader) : void_
+_ - PrintProgramLog(GLuint program) : void_
+_ - PrintOGlErrors() : void	_
+	</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>130</y>
+      <w>580</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>CubieRenderer
+--
+- 	OFFSET : float
+- 	RED : glm::vec3 
+- 	GREEN : glm::vec3 
+- 	BLUE : glm::vec3 
+- 	ORANGE : glm::vec3 
+- 	YELLOW : glm::vec3 
+- 	WHITE : glm::vec3 
+- 	AddSidePosition(int sideType, int direction, std::vector&lt;glm::vec3&gt;&amp; positionArray) : void 
+- 	AddSideColor(int sideType, int direction, std::vector&lt;glm::vec3&gt;&amp; colorArray) : void 
+- 	AddSideTexCoords(std::vector&lt;glm::vec2&gt;&amp; texCoordArray) : void 
+- 	m_arrayBufferObject  : GLuint
+- 	m_vertexBufferObject[3]  : GLuint
+- 	m_shaderProgram : GLuint
+- 	m_transformLocation : GLuint
+- 	m_texture : GLuint
+--
++ 	Initialize() : void
++ 	Render(const glm::mat4&amp; viewProjection, const glm::mat4&amp; model) : void
++ 	ClearResources() : void
++ 	GetCubieExtension() : float
+	
+	</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>470</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

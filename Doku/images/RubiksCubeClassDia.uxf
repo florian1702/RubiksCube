@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>0</y>
+      <w>220</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;struct&gt;&gt;
+Cubie
+--
+	+ int m_id : int
+	+ m_position : glm::vec3
+	+ m_visibleRotation : glm::mat4 
+	+ m_snapedRotation : glm::mat4 
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>480</x>
+      <y>190</y>
+      <w>850</w>
+      <h>530</h>
+    </coordinates>
+    <panel_attributes>template=Func: Function
+RubiksCube
+--
+- m_cubieRenderer : CubieRenderer  
+- m_input : InputSystem*      
+- m_modelRotation : glm::quat 
+- m_grid : std::array&lt;std::array&lt;std::array&lt;Cubie*, 3&gt;, 3&gt;, 3&gt; 
+- m_clickedFace : CubeFace
+- m_activeRotationAxis : Axis
+- m_xSliceIndex : int
+- m_ySliceIndex : int
+- m_zSliceIndex : int
+- m_facePlaneIntersectionPoint : glm::vec3 
+- m_animationState : AnimationState
+- m_totalFaceRotationDegree : float
+- m_oldVisibleRotations : std::array&lt;std::array&lt;glm::quat, 3&gt;, 3&gt; 
+- m_tickCounter : float
+- m_previousScreenPosition : glm::vec2 
+_- NORMALS_OF_FACES : std::map&lt;int, glm::vec3&gt; _
+--
+ + Initialize(const RubiksGameInterface&amp; gameInterface) : void
+ + Render(const glm::mat4&amp; viewProjection) : void
+ + Update(const RubiksGameInterface&amp; gameInterface) : void
+ + ClearResources() : void
+ - UpdateMouse() : void
+ - RotateCube() : void
+ - DetermineClickedFace() : void
+ - DetermineActiveSlice() : void
+ - FindClosestDirection(const glm::vec3&amp; referenceDirection, const glm::vec3&amp; vectorU, const glm::vec3&amp; vectorV) : glm::vec3 
+ - DeltaRotateSlice() : void
+ - StartSnappingAnimation() : void
+ - UpdateAnimation(float deltaTime) : void
+ - ForEachInSlice(Func func) : void
+	
+	</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>120</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>560</x>
+      <y>800</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+AnimationState
+--
+		STABLE = 0
+		ROTATING = 1
+		SNAPING = 2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>820</x>
+      <y>800</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+Axis
+--
+		UNSET_AXIS = -1
+		X = 0
+		Y = 1
+		Z = 2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1080</x>
+      <y>800</y>
+      <w>150</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+CubeFace
+--
+		UNSET_FACE = -1
+		RIGHT_FACE = 0
+		TOP_FACE = 1
+		FRONT_FACE = 2
+		LEFT_FACE = 3
+		BOTTOM_FACE = 4
+		BACK_FACE = 5</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>710</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>710</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1140</x>
+      <y>710</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

@@ -1,14 +1,3 @@
-%------------------ vorlage.tex ------------------------------------------------
-%
-% LaTeX-Vorlage zur Erstellung von Projektdokumentationen
-% im Fachbereich Informatik der Hochschule Trier
-%
-% Basis: Vorlage 'svmono' des Springer Verlags
-% Bearbeiter: Hermann Schloß, Christian Bettinger
-%
-%-------------------------------------------------------------------------------
-
-
 %------------------ Präambel ---------------------------------------------------
 \documentclass[envcountsame, envcountchap, deutsch]{i-studis}
 
@@ -66,55 +55,53 @@
 %------------------ Titelseite -------------------------------------------------
 \begin{document}
 
-\title{Titel der Arbeit auf Deutsch}
-\subtitle{English Title of the Thesis}
+\title{Rubiks Cube Dokumentation}
+%\subtitle{English Title of the Thesis}
 
-\author{Vorname Nachname}
+\author{Florian Wößner}
 
-\supervisor{Titel Vorname Nachname}
+\supervisor{Prof. Dr. Christoph Lürig}
 
-\address{Ort}
-\submitdate{DD.MM.YYYY}
+\address{Trier}
+\submitdate{02.02.2025}
 
 %------------------ Projektart -------------------------------------------------
 %\project{Bachelor-Projektarbeit}
-\project{Bachelor-Abschlussarbeit}
+%\project{Bachelor-Abschlussarbeit}
 %\project{Master-Projektstudium}
 %\project{Master-Abschlussarbeit}
 %\project{Seminar}
-%\project{Hausarbeit}
+\project{Hausarbeit}
 
 \mytitlepage
 
 %------------------ Vorwort, Kurzfassung, Verzeichnisse ------------------------
 \frontmatter
-\input{chapters/Vorwort}								% Vorwort (optional)
-\input{chapters/Kurzfassung}							% Kurzfassung/Abstract
+%\input{chapters/Vorwort}								% Vorwort (optional)
+%\input{chapters/Kurzfassung}							% Kurzfassung/Abstract
 \tableofcontents										% Inhaltsverzeichnis
-\listoffigures											% Abbildungsverzeichnis (optional)
-\listoftables											% Tabellenverzeichnis (optional)
-\lstlistoflistings										% Listings (optional)
+%\listoffigures											% Abbildungsverzeichnis (optional)
+%\listoftables											% Tabellenverzeichnis (optional)
+%\lstlistoflistings										% Listings (optional)
 
 
 %------------------ Kapitel ----------------------------------------------------
 \mainmatter
-\input{chapters/EinleitungProblemstellung}
+\input{chapters/Einleitung}
 \input{chapters/WeitereKapitel}
-\input{chapters/Bausteine}
-\input{chapters/Beispiel}
-\input{chapters/ZusammenfassungAusblick}
+\input{chapters/Zusammenfassung}
 
 
 %------------------ Literaturverzeichnis & Index -------------------------------
 \backmatter
-\bibliography{literatur}								% Literaturverzeichnis (literatur.bib)
-\printindex												% Index (optional)
+%\bibliography{literatur}								% Literaturverzeichnis (literatur.bib)
+%\printindex												% Index (optional)
 
 
 %------------------ Anhänge ----------------------------------------------------
 \begin{appendix}
-	\include{chapters/Glossar}							% Glossar (optional)
-	\include{chapters/Selbststaendigkeitserklaerung}	% Selbstständigkeitserklärung
+	%\include{chapters/Glossar}							% Glossar (optional)
+	%\include{chapters/Selbststaendigkeitserklaerung}	% Selbstständigkeitserklärung
 \end{appendix}
 
 

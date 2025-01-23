@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>850</x>
+      <y>660</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+ClickState
+--
+		NO_ACTION = 0
+		CLICK = 1
+		HOLD = 2
+		RELEASE = 3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>660</y>
+      <w>360</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>KeyboardObserver
+--
+ - m_window : GLFWwindow*
+ - m_key : int
+ + m_wasDown : bool
+ + m_wasPressed : bool
+ + m_wasReleased : bool
+--
+ + KeyboardObserver()
+ + KeyboardObserver(GLFWwindow* window, int key);
+ + Update() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>660</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enum&gt;&gt;
+MouseButton
+--
+		NO_BUTTON = -1
+		LEFT_BUTTON = 0
+		RIGHT_BUTTON = 1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>10</y>
+      <w>830</w>
+      <h>550</h>
+    </coordinates>
+    <panel_attributes>InputSystem
+--
+- m_keyMapper : std::map&lt;int, std::unique_ptr&lt;KeyboardObserver&gt;&gt;
+- m_window : GLFWwindow*
+- m_activeMouseButton : MouseButton
+- m_leftClickState : ClickState
+- m_rightClickState : ClickState
+- m_screenPosition : glm::vec2 
+- m_dragStartScreenPosition : glm::vec2 
+- m_dragStartRayOrigin : glm::vec3
+- m_dragStartRayDirection : glm::vec3
+- m_viewProjection : glm::mat4 
+- m_view : glm::mat4 
+- m_projection : glm::mat4 
+_- m_mouseScrollOffset : glm::ivec2_
+--
++ Initialize(GLFWwindow* window, const glm::mat4&amp; projection = glm::mat4(1.0f), const glm::mat4&amp; view = glm::mat4(1.0f)) : void
++ Update() : void
++ ObserverKey(int key) : void
++ SetViewProjection(const glm::mat4&amp; projection, const glm::mat4&amp; view) : void
++ GetLeftClickState() const : ClickState
++ GetRightClickState() const : ClickState
++ GetScreenPosition() const : glm::vec2 
++ GetDragStartScreenPosition() const : glm::vec2 
++ GetPickingRay(glm::vec3&amp; out_origin, glm::vec3&amp; out_direction) const : void
++ GetMouseWheelScrollOffset() const : glm::ivec2 
++ WasKeyDown(int key) : bool 
++ WasKeyPressed(int key) : bool 
++ WasKeyReleased(int key) : bool 
++ GetActiveMouseButton() const : MouseButton
++ NormalizeScreenVector(const glm::vec2&amp; screenPosition) const : glm::vec2
++ WorldToScreen(const glm::vec3&amp; worldPosition) const : glm::vec2
++ ScreenToWorld(const glm::vec2&amp; screenPosition) const : glm::vec3 
+- UpdateClickState(MouseButton mouseButton, ClickState&amp; clickState) : void
+_- ScrollCallback(GLFWwindow* window, double xScroll, double yScroll) : void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>550</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>550</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>550</y>
+      <w>30</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
