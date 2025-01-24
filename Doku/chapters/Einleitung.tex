@@ -1,3 +1,14 @@
 \chapter{Einleitung}
+Das Rubik’s Cube Projekt wurde im Rahmen des Moduls Spieleprogrammierung - Vertiefung entwickelt. Ziel des Projekts war es, einen interaktiven Rubik’s Cube zu simulieren, der mithilfe von Maus- und Tastatureingaben gesteuert werden kann. Die technische Umsetzung erfolgte unter Verwendung von C++ und OpenGL, wobei mathematische Konzepte wie Quaternionen und Transformationen zur Anwendung kamen.
 
-\section{Funktionsweise}
+In dieser Hausarbeit werden die Funktionsweisen der wichtigsten Klassen und die grundlegenden Lösungsideen dokumentiert. Der Fokus liegt auf den entwickelten Ansätzen sowie einer oberflächlichen Beschreibung der Implementierung.
+
+\section{Steuerung}
+Der Rubik’s Cube wird vollständig durch Maus- und Tastatureingaben gesteuert:
+
+\begin{itemize}
+    \item Rechte Maustaste gedrückt: Durch Ziehen wird der gesamte Cube rotiert.
+    \item Linke Maustaste gedrückt: Ermöglicht das Drehen einzelner Slices (Zeilen und Spalten).
+    \item Leertaste: Setzt den Würfel in den Ausgangszustand zurück.
+    \item Scrollrad: Kann benutzt werden, um mit der Kamera herein- oder herauszuzoomen.
+\end{itemize}

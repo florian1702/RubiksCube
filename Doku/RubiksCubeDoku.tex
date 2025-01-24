@@ -1,3 +1,4 @@
+
 %------------------ Präambel ---------------------------------------------------
 \documentclass[envcountsame, envcountchap, deutsch]{i-studis}
 
@@ -8,6 +9,9 @@
 
 \usepackage[pdftex]{graphicx}
 \usepackage{epstopdf}
+
+% Zeilenabstand auf 1.5 setzen
+\renewcommand{\baselinestretch}{1.5}
 
 \usepackage{listings}
 
@@ -24,11 +28,13 @@
 
 \usepackage{makeidx}
 \usepackage{multicol}
+\usepackage{float}
 \makeindex
 
 \pagestyle{myheadings}
 \setlength{\textheight}{1.1\textheight}
-
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt} % Beispiel für 6pt Abstand zwischen Absätzen
 \lstset{
 	basicstyle=\scriptsize\ttfamily,
 	commentstyle=\scriptsize\ttfamily\color{Gray},
@@ -46,7 +52,6 @@
 	linewidth=144mm,
 	captionpos=b,
 }
-
 
 %------------------ Manuelle Silbentrennung ------------------------------------
 \hyphenation{Ele-men-tar-ob-jek-te ab-ge-tas-tet Aus-wer-tung House-holder-Matrix Least-Squares-Al-go-ri-th-men}
@@ -88,7 +93,7 @@
 %------------------ Kapitel ----------------------------------------------------
 \mainmatter
 \input{chapters/Einleitung}
-\input{chapters/WeitereKapitel}
+\input{chapters/Umsetzung}
 \input{chapters/Zusammenfassung}
 
 
