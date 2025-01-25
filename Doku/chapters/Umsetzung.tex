@@ -78,3 +78,43 @@ Die Struktur und die Beziehungen der Klassen \texttt{CubieRenderer} und \texttt{
 \end{figure}
 
 \section{RubiksCube und Cubie}
+Die Klasse \texttt{RubiksCube} ist die zentrale Komponente des Spiels und implementiert die Logik für den Rubik's Cube. In der \texttt{Initialize(const RubiksGameInterface\& gameInterface)}-Methode wird die \texttt{CubieRenderer}-Instanz initialisiert, die für das Rendern der einzelnen Cubies verantwortlich ist. Zusätzlich wird ein dreidimensionales Gitter aus \texttt{Cubie}-Objekten erstellt. Jeder Cubie wird mit einer eindeutigen ID und einer Position im 3D-Raum initialisiert. Das \texttt{InputSystem}-Objekt wird aus dem übergebenen \texttt{RubiksGameInterface} extrahiert, um Benutzereingaben zu verarbeiten.
+
+Ein \texttt{Cubie} ist ein einfaches Strukt, welches die Informationen über die Position, die sichtbare Rotation und die eingerastete Rotation eines Cubies speichert. Die sichtbare Rotation (\texttt{m\_visibleRotation}) wird für das Rendern verwendet, während die eingerastete Rotation (\texttt{m\_snapedRotation}) die korrekte Ausrichtung des Cubies im Gitter sicherstellt.
+
+Die \texttt{Render(const glm::mat4\& viewProjection)}-Methode ist für die visuelle Darstellung des Rubik's Cube verantwortlich. Sie nutzt die übergebene View-Projection-Matrix, um sowohl die globale Rotation des gesamten Rubik's Cube als auch die individuelle Position jedes Cubies korrekt in der Szene darzustellen. Das \texttt{CubieRenderer}-Objekt rendert jeden Cubie einzeln unter Verwendung der entsprechenden Transformationsmatrizen.
+
+Mit der \texttt{Update(const RubiksGameInterface\& gameInterface)}-Methode werden Benutzereingaben verarbeitet, insbesondere Mausinteraktionen. Außerdem aktualisiert sie die Snapping-Animation des Rubik's Cube. Durch die \texttt{UpdateMouse()}-Methode werden die Mausbewegungen und Klickzustände überwacht, um Aktionen wie das Drehen des gesamten Cubes oder einzelner Flächen einzuleiten. Beim Loslassen der linken Maustaste wird ein Soundeffekt abgespielt, um das Einrasten einer Fläche zu signalisieren.
+
+Die Methode \texttt{DetermineClickedFace} identifiziert die angeklickte Fläche des Rubik's Cube, indem sie einen Strahl von der Mausposition in die Szene wirft und überprüft, welche Fläche geschnitten wird. Dabei durchläuft die Methode die Normalen der Flächen und nutzt das Skalarprodukt in Kombination mit der Funktion \texttt{glm::intersectRayPlane(...)}, um den Schnittpunkt zu bestimmen und die angeklickte Fläche zu identifizieren.
+
+Die Methode \texttt{DetermineActiveSlice()} ist dafür verantwortlich, die zu drehende Fläche und Rotationschse des Rubik's Cube zu identifizieren, sobald der Spieler die linke Maustaste gedrückt hält und eine bestimmte Strecke auf dem Bildschirm zurücklegt (Dead Zone). 
+Zunächst wird der Schnittpunkt zwischen dem Strahl, der beim Start des Ziehens erzeugt wurde, und der angeklickten Fläche des Rubik's Cube im Objektraum berechnet. Dieser Schnittpunkt dient als Basis, um die Slice-Indizes für die X-, Y- und Z-Achsen (\texttt{m\_xSliceIndex}, \texttt{m\_ySliceIndex} und \texttt{m\_zSliceIndex}) zu bestimmen. Diese Indizes geben an, in welchem Bereich des Rubik's Cube der Schnittpunkt liegt und welche Fläche gedreht werden soll.
+Die Zugrichtung wird als die nächstgelegene Richtung zu den beiden verbleibenden orthogonalen Achsen bestimmt, die nicht der Normalen der angeklickten Fläche entsprechen.
+Genau dafür ist die Methode \texttt{FindClosestDirection(const glm::vec3\& referenceDirection, const glm::vec3\& vecU, const glm::vec3\& vecV)} zu\-ständig. Sie berechnet das maximale Skalarprodukt zwischen der Zugrichtung und den beiden gegebenen Vektoren, die die orthogonalen Achsen repräsentieren. Anhand des Ergebnisses wird die aktive Drehachse (\texttt{m\_activeRotationAxis}) festgelegt.
+
+\texttt{DeltaRotateSlice()} implementiert die Teilrotation einer Fläche des Rubik's Cube basierend auf der Mausbewegung. Die Methode wird aufgerufen, wenn der Spieler die linke Maustaste gedrückt hält und der Rubik's Cube sich im Rotationszustand befindet. Sie berechnet die Änderung der Bildschirmposition seit dem vorherigen Frame und verwendet diese, um die Rotationsstärke zu bestimmen.
+Die Methode berechnet auch den gezogenen Vektor, der sich auf der Ebene der angeklickten Fläche befindet. Dieser Vektor wird dann auf einen weiteren Vektor projiziert, der orthogonal zu den Normalen der aktiven Drehachse und der angeklickten Fläche steht.
+Die Methode berücksichtigt auch Sonderfälle, um sicherzustellen, dass die Rotation in die richtige Richtung erfolgt. Beispielsweise wird die Drehrichtung für bestimmte Flächen und Achsen umgekehrt, um die korrekte Ausrichtung zu gewährleisten. Dies geschieht durch die Überprüfung der aktuellen Fläche und der aktiven Drehachse.
+Die berechnete Rotation wird dann auf jeden Cubie in der betroffenen Fläche angewendet. Dazu wird eine Rotationsmatrix erstellt, die die Drehung um die aktive Achse repräsentiert. Diese Matrix wird mit der sichtbaren Rotation jedes Cubies multipliziert, um die neue Ausrichtung zu berechnen.
+Zusätzlich wird der Gesamtrotationsgrad der Fläche in der Variable \texttt{m\_totalFaceRotationDegree} gespeichert. Dieser Wert wird später verwendet, um die Einrast-Animation zu starten.
+
+Wenn der Benutzer die Maustaste loslässt, die Einrast-Animation durchgeführt. Dafür ist die Methode \texttt{StartSnappingAnimation()} zuständig. Zuerst wird der Gesamtrotationsgrad auf [0, 360] normalisiert und auf die nächsten 90 Grad gerundet. Danach wird die Rotationsmatrix erstellt, die die Rotation der Fläche nach dem Einrasten darstellt. Diese Matrix wird dann auf jeden Cubie in der betroffenen Fläche angewendet. Die alten Rotationen werden für die kommende Interpolation gespeichert.
+
+Die Methode \texttt{UpdateAnimation(float deltaTime)} aktualisiert die Einrast-Ani\-mation des Rubik's Cube basierend auf der vergangenen Zeit. 
+Während der Animation wird eine sphärische lineare Interpolation (SLERP) verwendet, um die Rotationen der Cubies schrittweise zwischen ihrer alten und ihrer einrast Rotation zu interpolieren. Der \texttt{m\_tickCounter} wird basierend auf \texttt{deltaTime} erhöht, um den Fortschritt der Animation zu steuern. 
+Wenn die Animation abgeschlossen ist (d.h., wenn der \texttt{m\_tickCounter} nahezu 1 erreicht), werden die sichtbaren Rotationen der Cubies auf ihre eingerasteten Rotationen gesetzt, und das 3D-Gitter wird entsprechend der Anzahl der Drehungen aktualisiert. Dies geschieht durch Transponieren und Invertieren der betroffenen Fläche.
+Zum Schluss werden alle relevanten Variablen zurückgesetzt, und der Zustand des Cubes wird auf \texttt{AnimationState::STABLE} gesetzt.
+
+Die Methode \texttt{ForEachInSlice(Func func)} ist eine  template-Funktion, die eine übergebene Funktion auf alle Cubies in der aktiven Fläche anwendet. Diese Methode ermöglicht eine effiziente Iteration durch die Cubies im aktuellen Slice und vermeidet die Speicherung zusätzlicher Teilmengen des Gitters.
+
+Die \texttt{ClearResources()}-Methode gibt alle Ressourcen des Rubik's Cube frei, einschließlich der Freigabe des \texttt{CubieRenderer}-Objekts und des Löschens aller \texttt{Cubie}-Pointer im 3D-Gitter.
+
+Eine detaillierte Übersicht der Klassenstruktur und der Beziehungen zwischen den Komponenten ist in Abbildung \ref{RubiksCubeClassDia} dargestellt.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.475]{images/RubiksCubeClassDia.png}
+	\caption{Klassendiagramm RubiksCube und Cubie}
+	\label{RubiksCubeClassDia}
+\end{figure}
